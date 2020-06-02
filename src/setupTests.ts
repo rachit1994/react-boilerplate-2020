@@ -4,6 +4,17 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom/extend-expect';
 
-import Adapter from 'enzyme-adapter-react-16';
 import { configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
 configure({ adapter: new Adapter() });
+
+// jest throws error saying that matchmedia is not found
+// https://stackoverflow.com/questions/39830580/jest-test-fails-typeerror-window-matchmedia-is-not-a-function
+Object.defineProperty(window, 'matchMedia', {
+    value: () => ({
+            matches: false,
+            addListener: () => {},
+            removeListener: () => {},
+        }),
+});
